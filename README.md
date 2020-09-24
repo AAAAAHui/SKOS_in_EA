@@ -37,3 +37,6 @@ Please open the EA, go with “Configure -> Transfer -> Import Reference Data ->
 > * Have some Object types that have been through function 1 “Interpret Objecttypes”, and connectors between them
 > * Select the **Diagram** from the “Browser -> Project”, where you want to check any inappropriate happened
 > * Right click the **Diagram**, and go to “Specialize -> Scripts -> Check Inappropriate Connectors"
+
+## Change Parameters
+Please go to the “Scripting -> Scripts -> Others -> Parameters”, and verify the parameters according to the comments in that script.
