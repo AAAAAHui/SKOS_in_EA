@@ -250,7 +250,8 @@ function fillValueList(dataType, json, scheme, concept){
 function classifyStereotype(dataType){
 	var attrSt;
 	if(dataType.Stereotype.indexOf("Referentielijst") != -1){
-		attrSt = 'Referentie element';
+//		attrSt = 'Referentie element';
+		return;
 	}
 	else if(dataType.Stereotype.indexOf("Codelijst") != -1){
 		return;
@@ -368,7 +369,11 @@ function main(){
 		
 		//find the concept of this class based on the value that user put in "Keywords"
 		var keyword = dataType.Tag;
-		Session.Output(keyword);
+//		Session.Output(keyword);
+		if(keyword == null || keyword == ''){
+			Session.Prompt("Please input SKOS concept you are looking for in tag 'Keywords'", promptOK);
+			return;
+		}
 		
 		//based on the user selection of SKOS thesaurus to fill in the tag value
 		var source = selectSKOS();
@@ -384,6 +389,10 @@ function main(){
 		var result_path = store_path + "search_result.json";
 		var text = readFile(result_path);
 		var json = JSON.parse(text);
+		if(json.results[0] == null){
+			Session.Prompt("No results found with the keyword '" + keyword + "' in SKOS vocabulary '" + source + "'.", promptOK);
+			return;
+		}
 		writeConceptsList(store_path, json);
 		
 		//user chooses a SKOS concept from output and type into the blank

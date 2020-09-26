@@ -58,7 +58,6 @@ function readFile(path){
 	var jsonF = f.ReadAll(); 
 	f.Close();
 //	fso.DeleteFile(path, true);
-
 //	var jsonStr = JSON.stringify(jsonF, null, 4);
 //	var jsonObj = JSON.parse(jsonF);
 	return jsonF;
@@ -342,7 +341,11 @@ function main(){
 	
 	//find the concept of this class based on the value that user put in "Keywords"
 	var keyword = aClass.Tag;
-	Session.Output(keyword);
+	if(keyword == null || keyword == ''){
+		Session.Prompt("Please input SKOS concept you are looking for in tag 'Keywords'", promptOK);
+		return;
+	}
+//	Session.Output(keyword+ '123');
 	
 	//based on the user selection of SKOS thesaurus to fill in the tag value
 	var source = selectSKOS();
@@ -359,6 +362,10 @@ function main(){
 	var result_path = store_path + "search_result.json";
 	var text = readFile(result_path);
 	var json = JSON.parse(text);
+	if(json.results[0] == null){
+		Session.Prompt("No results found by searching the keyword '" + keyword + "' in SKOS vocabulary '" + source + "'.", promptOK);
+		return;
+	}
 	writeConceptsList(store_path, json);
 
 	//user chooses a SKOS concept from output and type into the blank
