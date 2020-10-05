@@ -3,11 +3,23 @@
 ## Introduction
 These are Sparx System Enterprise Architect (EA) JScript Scripting. The propose of the project is to create connections between SKOS vocabularies and the EA application. Then the elements in information models that are developed by EA can be defined by SKOS thesaurus.
 
-## About Scripts
+## Preparation
+
+### JScript
 The language of Scripting is JScript. If you cannot run the scripting (the Console/Debugger showed “Microsoft Process Debug Manager creation Failed: 0x80040154”), then please install the package called “scd10en” in the file.
 
-## Import Scripts
+### Python
+Since the scripts in EA are pure library, I developed the query functions by Python, which are in the file “Query”. Please ensure your computer has installed Python 3.7. 
+To install the Request library that I used in code, please go to the command and input ”pip install requests”.
+
+### Import Scripts
 Please open the EA, go with “Configure -> Transfer -> Import Reference Data -> Select File”. Then select the “SKOS+MIM_Project.xml” file, and click “Automation Scripts”, and click “Import”.
+
+### Change Parameters
+Please first go to the “Scripting -> Scripts -> Others -> Parameters”, and verify the parameters according to the comments in that script.
+
+### Check MDG technology
+Please make sure you have ticked “Specialize –> Manage-Tech -> MDG technologies -> EAScriptLib” box.
 
 ## Run Functions
 
@@ -37,6 +49,3 @@ Please open the EA, go with “Configure -> Transfer -> Import Reference Data ->
 > * Have some Object types that have been through function 1 “Interpret Objecttypes”, and connectors between them
 > * Select the **Diagram** from the “Browser -> Project”, where you want to check any inappropriate happened
 > * Right click the **Diagram**, and go to “Specialize -> Scripts -> Check Inappropriate Connectors"
-
-## Change Parameters
-Please go to the “Scripting -> Scripts -> Others -> Parameters”, and verify the parameters according to the comments in that script.

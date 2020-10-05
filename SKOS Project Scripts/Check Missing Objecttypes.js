@@ -38,7 +38,7 @@ function addElement(thePackage, theDiagram, tag, skosTag, currentElement){
 //	Session.Output(newElement.SynchConstraints("MIM", "Objecttype"));
 //	Session.Output(newElement.SynchTaggedValues("MIM", "Objecttype"));
 	var newTag as EA.TaggedValue;
-	newTag = newElement.TaggedValues.GetAt(0);	//This is a small bug, that the element cannot get the tag "Begrip" by its name, and I cannot figure it out.
+	newTag = newElement.TaggedValues.GetAt(0);	//This is a small bug, that the element cannot get the tag "Begrip" by its name, only can be located by index.
 //	newTag = newElement.TaggedValues.GetByName(mimTagSKOSPref);
 //	newTag = newElement.TaggedValues.GetByName("Begrip");
 	newTag.Value = tag.Value;

@@ -78,9 +78,8 @@ function addAttrTags(attr, tag, value){
 
 //Add SKOS definition for the elements
 function addNotes(aClass, concept, notes){
-	//The output of \n is shown as newline, but the notes did not show like that
-	aClass.Notes = aClass.Notes + ' \n -- Naam -- \n' + concept
-		+ ' \n -- Definitie -- \n' + notes + ' \n -- Toelichting -- \n';
+	aClass.Notes = aClass.Notes + "\r\n-- Naam --\r\n" + concept
+		+ "\r\n-- Definitie --\r\n" + notes + "\r\n -- Toelichting -- \r\n";
 //	aClass.Update();
 	aClass.Refresh();
 	

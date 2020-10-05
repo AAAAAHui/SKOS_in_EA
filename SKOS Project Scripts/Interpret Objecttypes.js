@@ -5,9 +5,9 @@
 
 //Add SKOS definition for the elements
 function addNotes(aClass, concept, notes){
-	aClass.Notes = aClass.Notes + "\n-- Naam --\n" + concept
-		+ "\n-- Definitie --\n" + notes + "\n -- Toelichting -- \n";
-//	aClass.Update();
+	aClass.Notes = aClass.Notes + "\r\n-- Naam --\r\n" + concept
+		+ "\r\n-- Definitie --\r\n" + notes + "\r\n -- Toelichting -- \r\n";
+	aClass.Update();
 	aClass.Refresh();
 	
 	Session.Output( "New notes: '" + aClass.Notes + "'" );
@@ -27,7 +27,7 @@ function addMIMTags(aClass, tag, value){
 	var label as EA.TaggedValue;
 	label = aClass.TaggedValues.GetByName(tag);
 	if(label == null){
-		Session.Prompt("MIM tag " + tag + " is not found", promptOK);
+//		Session.Prompt("MIM tag " + tag + " is not found", promptOK);
 		return;
 	}
 	label.Value = value;
@@ -117,12 +117,12 @@ function interpret(aClass, json, scheme, uri, concept){
 			//add altLabel of concept in tags
 			if(json.graph[i].hasOwnProperty("altLabel")){
 				if(json.graph[i].altLabel.length == null){
-					addTags(aClass, 'altLabel ', json.graph[i].altLabel.value);
+//					addTags(aClass, 'altLabel ', json.graph[i].altLabel.value);
 					aClass.Alias = json.graph[i].altLabel.value;
 				}
 				else{
 					for(var j=0; j<json.graph[i].altLabel.length; j++){
-						addTags(aClass, 'altLabel' + (j+1), json.graph[i].altLabel[j].value);
+//						addTags(aClass, 'altLabel' + (j+1), json.graph[i].altLabel[j].value);
 						if(j = 0)
 							aClass.Alias = json.graph[i].altLabel[j].value;
 						else
