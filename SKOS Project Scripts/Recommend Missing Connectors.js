@@ -14,10 +14,10 @@ function checkConnector(thePackage, theDiagram, theElement, tag, skosTag1, skosT
 //			tempElement = thePackage.Elements.GetAt(j);
 			tempElement = Repository.GetElementByID(theDiagram.DiagramObjects.GetAt(j).ElementID);
 			var tempTag as EA.TaggedValue;
-			tempTag = tempElement.TaggedValues.GetByName(mimTagSKOSPref);
+			tempTag = tempElement.TaggedValues.GetByName(mimTagConceptUri);
 			
 			//Locate a element has Semantic relationship with the selected element
-			if(tempElement.Name == tag.Value || (tempTag != null && tempTag.Value == tag.Value) ){
+			if(tempTag != null && tempTag.Value == tag.Value){
 				var con as EA.Connector;
 				var n = 0;
 				
@@ -33,7 +33,7 @@ function checkConnector(thePackage, theDiagram, theElement, tag, skosTag1, skosT
 				
 				//Has went through all connectors and did not find that two elements have relation
 				if(n == theElement.Connectors.Count){
-					if(Session.Prompt("Possible missing connector between '" + theElement.Name + "' that can attach with Object type '" + tempElement.Name + "'", promptOKCANCEL)  == resultOK){
+					if(Session.Prompt("Possible missing connector between '" + theElement.Name + "' that can attach with '" + tempElement.Name + "'. Do you want to add the connector?", promptOKCANCEL)  == resultOK){
 						addConnector(skosTag1, theElement, tempElement);
 						return;
 					}
@@ -160,9 +160,13 @@ function main(){
 	//Go through SKOS tags of selected element to check relevant connectors and object types are described in correct way
 	for(var i = 0; i<theElement.TaggedValues.Count; i++){
 		tag = theElement.TaggedValues.GetAt(i);
-		checkConnector(thePackage, theDiagram, theElement, tag, 'related concept', 'name');
-		checkConnector(thePackage, theDiagram, theElement, tag, 'narrower concept', 'name');
-		checkConnector(thePackage, theDiagram, theElement, tag, 'broader concept', 'name');
+		checkConnector(thePackage, theDiagram, theElement, tag, 'related concept', 'uri');
+		checkConnector(thePackage, theDiagram, theElement, tag, 'narrower concept', 'uri');
+		checkConnector(thePackage, theDiagram, theElement, tag, 'broader concept', 'uri');
+	}
+	
+	if(i == theElement.TaggedValues.Count){
+		Session.Prompt("No missing connectors found", promptOK);
 	}
 	
 	if(theDiagram.Update())

@@ -19,11 +19,11 @@ var mimTagSKOSVocab = "Herkomst";
 
 //This is the tag name of MIM profile for describing URI of SKOS concept
 //Please change the content between ""
-var mimTagConceptUri = "Locatie";
+var mimTagConceptUri = "Begrip";
 
 //This is the tag name of MIM profile for describing prefLabel of skos in "skos:prefLabel" label
 //Please change the content between ""
-var mimTagSKOSPref = "Begrip";
+var mimTagSKOSPref = "";
 
 //This is the tag name of MIM profile for describing the content in "skos:inScheme" label
 //Please change the content between ""
@@ -31,4 +31,4 @@ var mimTagSKOSinScheme = "Herkomst definitie";
 
 //This is the tag name of MIM profile for describing the definition of SKOS concept in "skos:definition" label
 //Please change the content between ""
-var mimTagSKOSdefinition = "Toelichting";
+var mimTagSKOSdefinition = "";

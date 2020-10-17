@@ -16,7 +16,7 @@ function addAttributes(aClass, attribute, uri, attrSt){
 	var myDate = new Date();
 	addAttrTags(attr, "Datum opname", myDate.toLocaleDateString());
 	addAttrTags(attr, mimTagConceptUri, uri);
-	addTags(attr, 'URI', uri);
+//	addTags(attr, 'URI', uri);
 
 	attr.Update();
 	aClass.Update();
@@ -78,7 +78,7 @@ function addAttrTags(attr, tag, value){
 
 //Add SKOS definition for the elements
 function addNotes(aClass, concept, notes){
-	aClass.Notes = aClass.Notes + "\r\n-- Naam --\r\n" + concept
+	aClass.Notes = aClass.Notes + "\r\n-- Naam --\r\n" + aClass.Name
 		+ "\r\n-- Definitie --\r\n" + notes + "\r\n -- Toelichting -- \r\n";
 //	aClass.Update();
 	aClass.Refresh();
@@ -165,7 +165,7 @@ function selectSKOS(){
 function interpret(aClass, json, scheme, uri, concept){
 
 	//add URI of concept
-	addTags(aClass, 'URI', uri);
+//	addTags(aClass, 'URI', uri);
 	//add prefLabels of concept
 //	addTags(aClass, 'prefLabel', concept);
 	
@@ -189,12 +189,12 @@ function interpret(aClass, json, scheme, uri, concept){
 			//add altLabel of concept in tags
 			if(json.graph[i].hasOwnProperty("altLabel")){
 				if(json.graph[i].altLabel.length == null){
-					addTags(aClass, 'altLabel ', json.graph[i].altLabel.value);
+//					addTags(aClass, 'altLabel ', json.graph[i].altLabel.value);
 					aClass.Alias = json.graph[i].altLabel.value;
 				}
 				else{
 					for(var j=0; j<json.graph[i].altLabel.length; j++){
-						addTags(aClass, 'altLabel' + (j+1), json.graph[i].altLabel[j].value);
+//						addTags(aClass, 'altLabel' + (j+1), json.graph[i].altLabel[j].value);
 						if(j = 0)
 							aClass.Alias = json.graph[i].altLabel[j].value;
 						else
@@ -206,12 +206,12 @@ function interpret(aClass, json, scheme, uri, concept){
 			//add inScheme of concept in tags
 			if(json.graph[i].hasOwnProperty("inScheme")){
 				if(json.graph[i].inScheme.length == null){
-					addTags(aClass, 'inScheme', json.graph[i].inScheme.uri);
+//					addTags(aClass, 'inScheme', json.graph[i].inScheme.uri);
 					addMIMTags(aClass, mimTagSKOSinScheme, json.graph[i].inScheme.uri);
 				}
 				else{
 					for(var j=0; j<json.graph[i].inScheme.length; j++){
-						addTags(aClass, 'inScheme ' + (j+1), json.graph[i].inScheme[j].uri);
+//						addTags(aClass, 'inScheme ' + (j+1), json.graph[i].inScheme[j].uri);
 						if(j = 0)
 							addMIMTags(aClass, mimTagSKOSinScheme, json.graph[i].inScheme[j].uri);
 						else{
@@ -408,12 +408,13 @@ function main(){
 		runpy(py_path, store_path, 'narrower.py', source, uri);
 		
 		//add information based on the MIM tags
+		dataType.Tag = concept;
 		addMIMTags(dataType, mimTagSKOSPref, concept);
 		var myDate = new Date();
 		addMIMTags(dataType, "Datum opname", myDate.toLocaleDateString());
 		addMIMTags(dataType, mimTagSKOSVocab, source);
 		addMIMTags(dataType, mimTagConceptUri, uri);
-		addTags(dataType, "URI", uri);
+//		addTags(dataType, "URI", uri);
 		
 		//the path of json description of SKOS concept
 		result_path = store_path + 'narrower.json';

@@ -11,14 +11,14 @@ function compare(thePackage, theDiagram, currentElement, tag, skosTag1, skosTag2
 			var tempElement as EA.Element;
 			tempElement = Repository.GetElementByID(theDiagram.DiagramObjects.GetAt(j).ElementID);
 			var tempTag as EA.TaggedValue;
-			tempTag = tempElement.TaggedValues.GetByName(mimTagSKOSPref);
-			if(tempElement.Name == tag.Value || (tempTag != null && tempTag.Value == tag.Value) )
+			tempTag = tempElement.TaggedValues.GetByName(mimTagConceptUri);
+			if(tempTag != null && tempTag.Value == tag.Value)
 				break;
 			else
 				j++; 
 		}
 		if(j == theDiagram.DiagramObjects.Count){
-			if(Session.Prompt("Possible missing Object type '" + tag.Value + "' that can attach with Object type '" + currentElement.Name + "'", promptOKCANCEL)  == resultOK){
+			if(Session.Prompt("Possible missing Object type that can attach with '" + currentElement.Name + "'. Do you want to add the new Object type?", promptOKCANCEL)  == resultOK){
 				addElement(thePackage, theDiagram, tag, skosTag1, currentElement);
 				return;
 			}
@@ -30,9 +30,9 @@ function compare(thePackage, theDiagram, currentElement, tag, skosTag1, skosTag2
 function addElement(thePackage, theDiagram, tag, skosTag, currentElement){
 	// Create an element (which will be added to the diagram later on)
 	var newElement as EA.Element;
-	newElement = thePackage.Elements.AddNew(tag.Value, "Class");
+	newElement = thePackage.Elements.AddNew(skosTag + " of " + currentElement.Name, "Class");
 	newElement.Stereotype = "MIM::Objecttype";
-	newElement.Tag = newElement.Name;
+//	newElement.Tag = newElement.Name;
 	newElement.Update();
 //	Session.Output(newElement.FQStereotype);
 //	Session.Output(newElement.SynchConstraints("MIM", "Objecttype"));
@@ -178,10 +178,14 @@ function main(){
 		Session.Output(currentElement.Name);
 		for(var n = 0; n<currentElement.TaggedValues.Count; n++){
 			tags = currentElement.TaggedValues.GetAt(n);
-			compare(thePackage, theDiagram, currentElement, tags, 'related concept', 'name');
-			compare(thePackage, theDiagram, currentElement, tags, 'narrower concept', 'name');
-			compare(thePackage, theDiagram, currentElement, tags, 'broader concept', 'name');
+			compare(thePackage, theDiagram, currentElement, tags, 'related concept', 'uri');
+			compare(thePackage, theDiagram, currentElement, tags, 'narrower concept', 'uri');
+			compare(thePackage, theDiagram, currentElement, tags, 'broader concept', 'uri');
 		}
+	}
+	
+	if(i == elements.Count){
+		Session.Prompt("No missing Object types found", promptOK);
 	}
 	
 	if(theDiagram.Update())

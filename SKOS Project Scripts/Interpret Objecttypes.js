@@ -5,7 +5,7 @@
 
 //Add SKOS definition for the elements
 function addNotes(aClass, concept, notes){
-	aClass.Notes = aClass.Notes + "\r\n-- Naam --\r\n" + concept
+	aClass.Notes = aClass.Notes + "\r\n-- Naam --\r\n" + aClass.Name
 		+ "\r\n-- Definitie --\r\n" + notes + "\r\n -- Toelichting -- \r\n";
 	aClass.Update();
 	aClass.Refresh();
@@ -88,9 +88,10 @@ function deleteTags(aClass){
 function interpret(aClass, json, scheme, uri, concept){
 
 	//add URI of concept
-	addTags(aClass, 'URI', uri);
+//	addTags(aClass, 'URI', uri);
 	//add prefLabels of concept
 //	addTags(aClass, 'prefLabel', concept);
+	aClass.Tag = concept;
 	
 	var i = 0;
 	while(i<json.graph.length){
@@ -134,12 +135,12 @@ function interpret(aClass, json, scheme, uri, concept){
 			//add inScheme of concept in tags
 			if(json.graph[i].hasOwnProperty("inScheme")){
 				if(json.graph[i].inScheme.length == null){
-					addTags(aClass, 'inScheme', json.graph[i].inScheme.uri);
+//					addTags(aClass, 'inScheme', json.graph[i].inScheme.uri);
 					addMIMTags(aClass, mimTagSKOSinScheme, json.graph[i].inScheme.uri);
 				}
 				else{
 					for(var j=0; j<json.graph[i].inScheme.length; j++){
-						addTags(aClass, 'inScheme ' + (j+1), json.graph[i].inScheme[j].uri);
+//						addTags(aClass, 'inScheme ' + (j+1), json.graph[i].inScheme[j].uri);
 						if(j = 0)
 							addMIMTags(aClass, mimTagSKOSinScheme, json.graph[i].inScheme[j].uri);
 						else{
